@@ -1,0 +1,13 @@
+
+# Actor path topic
+- ros_topic_name: "/actor/cmd_path"
+  gz_topic_name: "/actor/cmd_path"
+  ros_type_name: "geometry_msgs/msg/PoseArray"
+  gz_type_name: "gz.msgs.Pose_V"
+  direction: ROS_TO_GZ
+
+- ros_topic_name: "/actor/cmd_vel"
+  gz_topic_name: "/actor/cmd_vel"
+  ros_type_name: "geometry_msgs/msg/Twist"
+  gz_type_name: "gz.msgs.Twist"
+  direction: ROS_TO_GZ

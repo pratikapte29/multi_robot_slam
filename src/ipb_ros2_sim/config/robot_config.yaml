@@ -1,0 +1,97 @@
+use:
+  lidar_3d: true
+  lidar_2d: true
+  cam_front: true
+  cam_up: true
+  imu: true
+
+platform_height: 0.5
+max_linear_velocity: 2.0  # maximum input velocity command m/s
+max_angular_velocity: 3.0  # maximum input angular velocity command rad/s
+
+lidar_2d:
+  horizontal_fov:
+    min: -135.0  # degrees
+    max: 135.0   # degrees
+  range:
+    min: 0.1     # meters
+    max: 50.0        # meters
+  update_rate: 10.0     # Hz
+  samples: 1024  # number of points per scan
+  noise:
+    mean: 0.0
+    std: 0.01
+
+lidar_3d:
+  horizontal_fov:
+    min: -180.0  # degrees
+    max: 180.0   # degrees
+  vertical_fov:
+    min: -20.0   # degrees
+    max: 20.0    # degrees
+  range:
+    min: 0.1     # meters
+    max: 50.0        # meters
+  update_rate: 10.0     # Hz
+  beams: 32  # number of vertical beams
+  samples: 2048  # number of points per horizontal line
+  noise:
+    mean: 0.0
+    std: 0.01
+
+cam_front:
+  use_depth: true
+  use_rgb: true
+  horizontal_fov: 60.0  # degrees
+  resolution:
+    width: 640   # pixels
+    height: 480   # pixels
+  range:
+    min: 0.1     # meters
+    max: 30.0        # meters
+  update_rate: 10.0     # Hz
+  noise:
+    rgb:
+      mean: 0.1
+      std: 0.01
+    depth:
+      mean: 0.0
+      std: 0.01
+
+cam_up:
+  use_rgb: true
+  horizontal_fov: 90.0  # degrees
+  resolution:
+    width: 640   # pixels
+    height: 480   # pixels
+  range:
+    min: 0.1     # meters
+    max: 5.0        # meters
+  update_rate: 10.0     # Hz
+  noise:
+    rgb:
+      mean: 0.0
+      std: 0.01
+
+imu: # todo: do we want to make this axis-specific?
+  update_rate: 100.0     # Hz
+  noise:
+    angular_velocity:
+      mean: 0.0
+      std: 1e-3
+      bias:
+        mean: 0.0
+        std: 1e-4
+
+    linear_acceleration:
+      mean: 0.0
+      std: 0.01
+      bias:
+        mean: 0.0
+        std: 1e-3
+
+wheel_odom:
+  update_rate: 50.0     # Hz 
+
+odom_gt:
+  update_rate: 50.0     # Hz

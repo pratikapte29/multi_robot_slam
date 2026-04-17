@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+
+<!--
+# Copyright 2023 RealSense, Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+
+<!--
+This is the URDF model for the RealSense 430 camera, in its
+aluminum peripherial evaluation case.
+-->
+
+<robot name="rgbd_camera" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="rgbd_camera"
+        params="*origin parent_link topic name config">
+        <xacro:property name="M_PI" value="3.1415926535897931" />
+        <xacro:property name="dummy_inertia" value="1e-09" />
+
+
+        <!-- The following values model the aluminum peripherial case for the
+  	d455 camera, with the camera joint represented by the actual
+  	peripherial camera tripod mount -->
+        <xacro:property
+            name="d455_cam_width" value="0.124" />
+        <xacro:property name="d455_cam_height"
+            value="0.029" />
+        <xacro:property name="d455_cam_depth" value="0.026" />
+        <!-- glass cover is 0.1 mm inwards from front aluminium plate -->
+        <xacro:property
+            name="d455_glass_to_front" value="0.1e-3" /> <!-- 0.1e-3-->
+        <!-- see datasheet Revision 009, Fig. 4-4 page 68 -->
+        <xacro:property
+            name="d455_zero_depth_to_glass" value="4.55e-3" /> <!-- 4.55e-3 -->
+
+        <!-- The following offset is relative to the physical d455 camera peripherial
+  	camera tripod mount -->
+        <xacro:property
+            name="d455_cam_depth_px" value="${d455_cam_mount_from_center_offset}" />
+        <xacro:property
+            name="d455_cam_depth_py" value="0.0475" />
+        <xacro:property name="d455_cam_depth_pz"
+            value="${d455_cam_height/2}" />
+
+        <!-- offsets for mounting on the back -->
+        <xacro:property name="d455_mount_px"
+            value="${d455_cam_depth - d455_zero_depth_to_glass - d455_glass_to_front}" />
+        <xacro:property name="d455_mount_py" value="0.0475" />
+        <xacro:property name="d455_mount_pz" value="0.0" />
+
+        <!-- camera body, with origin at bottom screw mount -->
+        <joint name="${name}_mount_joint" type="fixed">
+            <xacro:insert_block name="origin" />
+            <parent link="${parent_link}" />
+            <child link="${name}_mount_link" />
+        </joint>
+        <link name="${name}_mount_link" />
+
+        <joint
+            name="${name}_joint" type="fixed">
+            <origin xyz="${d455_mount_px} ${d455_mount_py} ${d455_mount_pz}"
+                rpy="0 0 0" />
+            <parent link="${name}_mount_link" />
+            <child link="${name}_link" />
+        </joint>
+
+        <link name="${name}_link">
+            <visual>
+                <!-- the mesh origin is at front plate in between the two infrared camera axes -->
+                <origin
+                    xyz="${d455_zero_depth_to_glass + d455_glass_to_front} ${-d455_cam_depth_py} 0"
+                    rpy="${M_PI/2} 0 ${M_PI/2}" />
+                <geometry>
+                    <mesh filename="package://ipb_ros2_sim/description/sensors/meshes/d455.stl"
+                        scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="aluminum">
+                    <color rgba="0.5 0.5 0.5 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="${d455_zero_depth_to_glass-d455_cam_depth/2} ${-d455_cam_depth_py} 0"
+                    rpy="0 0 0" />
+                <geometry>
+                    <box size="${d455_cam_depth} ${d455_cam_width} ${d455_cam_height}" />
+                </geometry>
+            </collision>
+            <inertial>
+                <!-- The following are not reliable values, and should not be used for modeling -->
+                <mass value="0.001" />
+                <origin xyz="0 0 0" />
+                <inertia ixx="${dummy_inertia}" ixy="0.0" ixz="0.0" iyy="${dummy_inertia}" iyz="0.0"
+                    izz="${dummy_inertia}" />
+            </inertial>
+        </link>
+
+
+        <!-- camera depth joints and links -->
+
+        <joint
+            name="${name}_optical_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+            <parent link="${name}_link" />
+            <child link="${name}_optical_link" />
+        </joint>
+        <link
+            name="${name}_optical_link" />
+        <xacro:if value="${'use_rgb' in config and config.use_rgb}">
+            <xacro:include
+                filename="$(find ipb_ros2_sim)/description/sensors/urdf/rgb_sensor.urdf.xacro" />
+            <xacro:property name="shadow_cam_info"
+                value="${True if 'use_depth' in config and config.use_depth else False}" />
+
+            <xacro:rgb_sensor name="${name}" topic="${topic}" config="${config}"
+                shadow_cam_info="${shadow_cam_info}" />
+
+        </xacro:if>
+        <xacro:if value="${'use_depth' in config and config.use_depth}">
+            <xacro:include
+                filename="$(find ipb_ros2_sim)/description/sensors/urdf/depth_sensor.urdf.xacro" />
+            <xacro:depth_sensor name="${name}" topic="${topic}" config="${config}"
+                shadow_cam_info="False" />
+        </xacro:if>
+
+
+    </xacro:macro>
+</robot>

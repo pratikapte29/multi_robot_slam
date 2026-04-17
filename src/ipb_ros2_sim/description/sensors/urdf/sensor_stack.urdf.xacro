@@ -1,0 +1,221 @@
+<?xml version="1.0"?>
+<!--
+Software License Agreement (BSD)
+
+\file      wheel.urdf.xacro
+\authors   Paul Bovbel <pbovbel@clearpathrobotics.com>
+\copyright Copyright (c) 2015, Clearpath Robotics, Inc., All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted
+provided that
+the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this list of conditions
+and the
+   following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions
+and the
+   following disclaimer in the documentation and/or other materials provided with the distribution.
+ * Neither the name of Clearpath Robotics nor the names of its contributors may be used to endorse
+or promote
+   products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
+IMPLIED WAR-
+RANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
+DIRECT, IN-
+DIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT
+OF ${ns}STITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGE.
+-->
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="sensor_stack">
+
+	<xacro:include
+		filename="$(find ipb_ros2_sim)/description/sensors/urdf/lidar_2d.urdf.xacro" />
+	<xacro:include
+		filename="$(find ipb_ros2_sim)/description/sensors/urdf/lidar_3d.urdf.xacro" />
+	<xacro:include
+		filename="$(find ipb_ros2_sim)/description/sensors/urdf/rgbd_cam.urdf.xacro" />
+
+	<xacro:macro name="sensor_stack" params="parent_link robot_config ns *joint_pose">
+		<xacro:property name="platform_height" value="${robot_config.platform_height}" />
+		<xacro:property name="mount_plate_width" value="0.2" />
+		<xacro:property name="mount_plate_length" value="0.25" />
+		<xacro:property name="mount_plate_thickness" value="0.01" />
+		<xacro:property name="mount_support_width" value="0.04" />
+		<xacro:property name="lidar_z_offset" value="0.05" />
+		<xacro:property name="M_PI" value="3.1415926535897931" />
+
+		<link name="${ns}sensor_stack_link" />
+		<joint name="${ns}sensor_stack_joint" type="fixed">
+			<parent link="${parent_link}" />
+			<child link="${ns}sensor_stack_link" />
+			<xacro:insert_block name="joint_pose" />
+		</joint>
+
+		<xacro:if
+			value="${robot_config.use.lidar_3d or robot_config.use.cam_front or robot_config.use.cam_up}">
+			<xacro:macro name="mount_support" params="*origin parent_link prefix height">
+				<link name="${ns}${prefix}_mount_support_link">
+					<visual>
+						<geometry>
+							<mesh
+								filename="package://ipb_ros2_sim/description/sensors/meshes/1010_profile.stl"
+								scale="${mount_support_width*0.1} ${mount_support_width*0.1} ${height*0.1}" />
+						</geometry>
+						<material name="gray">
+							<color rgba="0.8 0.8 0.8 1" />
+						</material>
+						<origin xyz="0 0 ${height/2}" rpy="0 0 0" />
+					</visual>
+					<collision>
+						<geometry>
+							<box size="${mount_support_width} ${mount_support_width} ${height}" />
+						</geometry>
+						<origin xyz="0 0 ${height/2}" rpy="0 0 0" />
+					</collision>
+				</link>
+
+				<joint name="${ns}${prefix}_mount_support_joint" type="fixed">
+					<parent link="${parent_link}" />
+					<child link="${ns}${prefix}_mount_support_link" />
+					<xacro:insert_block name="origin" />
+				</joint>
+			</xacro:macro>
+
+
+			<link name="${ns}sensor_mount_plate_link">
+				<visual>
+					<geometry>
+						<box
+							size="${mount_plate_length} ${mount_plate_width} ${mount_plate_thickness}" />
+					</geometry>
+					<material name="black">
+						<color rgba="1 1 1 1" />
+					</material>
+					<origin xyz="0 0 ${mount_plate_thickness/2}" rpy="0 0 0" />
+				</visual>
+				<collision>
+					<geometry>
+						<box
+							size="${mount_plate_length} ${mount_plate_width} ${mount_plate_thickness}" />
+						<cylinder radius="0.05" length="${lidar_z_offset}" />
+					</geometry>
+					<origin xyz="0 0 ${mount_plate_thickness/2}" rpy="0 0 0" />
+				</collision>
+				<xacro:if value="${robot_config.use.lidar_3d}">
+					<visual>
+						<geometry>
+							<cylinder radius="0.05" length="${lidar_z_offset}" />
+						</geometry>
+						<material name="black">
+							<color rgba="1 1 1 1" />
+						</material>
+						<origin xyz="0 0 ${lidar_z_offset/2 + mount_plate_thickness}" rpy="0 0 0" />
+					</visual>
+					<collision>
+						<geometry>
+							<cylinder radius="0.05" length="${lidar_z_offset}" />
+						</geometry>
+						<origin xyz="0 0 ${lidar_z_offset/2}" rpy="0 0 0" />
+					</collision>
+				</xacro:if>
+			</link>
+
+
+			<joint name="${ns}sensor_mount_plate_joint" type="fixed">
+				<parent link="${ns}sensor_stack_link" />
+				<child link="${ns}sensor_mount_plate_link" />
+				<origin xyz="0 0 ${platform_height}" rpy="0 0 0" />
+			</joint>
+
+			<xacro:mount_support parent_link="${ns}sensor_stack_link" prefix="front_left"
+				height="${platform_height}">
+				<origin
+					xyz="${mount_plate_length/2 - mount_support_width/2} ${mount_plate_width/2 - mount_support_width/2} 0"
+					rpy="0 0 0" />
+			</xacro:mount_support>
+
+			<xacro:mount_support parent_link="${ns}sensor_stack_link" prefix="front_right"
+				height="${platform_height}">
+				<origin
+					xyz="${mount_plate_length/2 - mount_support_width/2} ${-mount_plate_width/2 + mount_support_width/2} 0"
+					rpy="0 0 0" />
+			</xacro:mount_support>
+
+			<xacro:mount_support parent_link="${ns}sensor_stack_link" prefix="rear_left"
+				height="${platform_height}">
+				<origin
+					xyz="${-mount_plate_length/2 + mount_support_width/2} ${mount_plate_width/2 - mount_support_width/2} 0"
+					rpy="0 0 0" />
+			</xacro:mount_support>
+
+			<xacro:mount_support parent_link="${ns}sensor_stack_link" prefix="rear_right"
+				height="${platform_height}">
+				<origin
+					xyz="${-mount_plate_length/2 + mount_support_width/2} ${-mount_plate_width/2 + mount_support_width/2} 0"
+					rpy="0 0 0" />
+			</xacro:mount_support>
+
+			<xacro:mount_support parent_link="${ns}sensor_stack_link" prefix="cam_up"
+				height="${mount_plate_width}">
+				<origin
+					xyz="${-mount_plate_length/2 - mount_support_width/2} ${-mount_plate_width/2} ${platform_height - mount_support_width/2}"
+					rpy="${-M_PI/2} 0 0" />
+			</xacro:mount_support>
+
+			<xacro:mount_support parent_link="${ns}sensor_stack_link" prefix="cam_front"
+				height="${mount_plate_width}">
+				<origin
+					xyz="${mount_plate_length/2 + mount_support_width/2} ${-mount_plate_width/2} ${platform_height - mount_support_width/2}"
+					rpy="${-M_PI/2} 0 0" />
+			</xacro:mount_support>
+
+
+		</xacro:if>
+
+		<xacro:property name="clean_ns" value="${ns[1:] if ns.startswith('/') else ns}" />
+		<xacro:if value="${robot_config.use.lidar_2d}">
+			<xacro:lidar2d name="${clean_ns}lidar2d" topic="${clean_ns}scan"
+				parent_link="${ns}sensor_stack_link"
+				config="${robot_config.lidar_2d}">
+				<origin xyz="${mount_plate_length/2 + 0.05} 0 0" rpy="0 0 0" />
+			</xacro:lidar2d>
+		</xacro:if>
+		<xacro:if value="${robot_config.use.lidar_3d}">
+			<xacro:lidar3d name="${ns}lidar3d" topic="${ns}lidar_3d"
+				parent_link="${ns}sensor_mount_plate_link"
+				config="${robot_config.lidar_3d}">
+				<origin xyz="0.0 0 ${mount_plate_thickness + lidar_z_offset}" rpy="0 0 0" />
+			</xacro:lidar3d>
+		</xacro:if>
+
+		<xacro:if value="${robot_config.use.cam_front}">
+			<xacro:rgbd_camera name="${ns}cam_front" topic="${ns}cam_front"
+				parent_link="${ns}sensor_mount_plate_link" config="${robot_config.cam_front}">
+				<origin
+					xyz="${mount_plate_length/2 + mount_support_width} 0 ${-mount_support_width/2}"
+					rpy="0 0 0" />
+			</xacro:rgbd_camera>
+		</xacro:if>
+		<xacro:if value="${robot_config.use.cam_up}">
+			<xacro:property name="d455_cam_height"
+				value="0.029" />
+			<xacro:property name="d455_cam_depth" value="0.026" />
+			<xacro:rgbd_camera name="${ns}cam_up" topic="${ns}cam_up"
+				parent_link="${ns}sensor_mount_plate_link" config="${robot_config.cam_up}">
+
+				<origin
+					xyz="${-mount_plate_length/2 - mount_support_width - d455_cam_height/2} 0 ${-mount_support_width/2 - d455_cam_depth/2}"
+					rpy="0 ${-M_PI/2} 0" />
+			</xacro:rgbd_camera>
+		</xacro:if>
+
+	</xacro:macro>
+</robot>

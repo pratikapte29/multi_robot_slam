@@ -1,0 +1,20 @@
+world: "office_world/office.world"
+world_name: "office_world"
+namespace: "P1"
+robotspace: "robot"
+
+bridge_robot: "robot_config.yaml"
+bridge_robot_camera: "robot_camera_config.yaml"
+bridge_sim: "sim_config.yaml"
+bridge_actor: "actor_config.yaml"
+
+rviz: "sim.rviz"
+
+robots:
+  - id: 0
+    model_type: jackal
+    init_pose:
+      x: "1.0"
+      y: "1.0"
+      z: "0.25"
+      theta: "-0.9"

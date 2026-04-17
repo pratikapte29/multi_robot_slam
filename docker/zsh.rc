@@ -1,0 +1,40 @@
+export LANG='en_US.UTF-8'
+export LANGUAGE='en_US:en'
+export LC_ALL='en_US.UTF-8'
+export TERM=xterm
+DISABLE_AUTO_UPDATE=true
+
+##### Zsh/Oh-my-Zsh Configuration
+export ZSH="/home/dev/.oh-my-zsh"
+
+plugins=(git z sudo history copybuffer copypath copyfile zsh-autosuggestions zsh-completions )
+
+
+source $ZSH/oh-my-zsh.sh
+export _TYPER_STANDARD_TRACEBACK=1
+export EDITOR=nvim
+alias vim=nvim
+export HISTFILE=/home/dev/.zsh_history
+
+export TERM=xterm-256color
+PROMPT='%F{214}%n@%m:%~$ %f'
+
+ros-env() {
+    source /opt/ros/jazzy/setup.zsh
+    source /home/dev/ros_ws/install/setup.zsh 2>/dev/null || true
+}
+ros-env
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+export ROS_LANG_DISABLE=genlisp:gennodejs:geneus
+
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

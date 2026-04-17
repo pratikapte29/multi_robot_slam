@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="apple_tree_3">
+    <static>true</static>
+
+    <!-- TREE -->
+    <include>
+      <uri>model://oak_tree/</uri>
+      <name>Oak tree</name>
+    </include>
+
+    <!-- APPLES -->
+    <include>
+      <name>apple_1</name>
+      <uri>model://ideal_apple</uri>
+      <pose>-4.58906031 -0.08991295099 3.8472411632537842 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>apple_2</name>
+      <uri>model://ideal_apple</uri>
+      <pose>0.4845397472 2.909890056 3.9418914318084717 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>apple_3</name>
+      <uri>model://ideal_apple</uri>
+      <pose>1.593549728 -3.324730039 4.5545792579650879 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>apple_4</name>
+      <uri>model://ideal_apple</uri>
+      <pose>2.716046333 -0.5851819813 3.336090087890625 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>apple_5</name>
+      <uri>model://ideal_apple</uri>
+      <pose>-1.96336031 -2.513149977 2.508591890335083 0 0 0</pose>
+    </include>
+
+
+
+
+
+    <include>
+      <name>aruco_marker_955</name>
+      <uri>model://aruco/aruco_marker_955</uri>
+      <pose>-1.986918569 1.41469 3.0703 -1.54322 0 0</pose>
+    </include>
+
+    <include>
+      <name>aruco_marker_956</name>
+      <uri>model://aruco/aruco_marker_956</uri>
+      <pose>2.8101699 1.37625348568 2.665223 -1.4974 0.00186592 -0.025344</pose>
+    </include>
+
+    <include>
+      <name>aruco_marker_957</name>
+      <uri>model://aruco/aruco_marker_957</uri>
+      <pose>-0.7853065729 -3.25889325 3.02521 -1.49353 0 -2.09</pose>
+    </include>
+
+
+    <include>
+      <uri>model://fence</uri>
+      <name>fence</name>
+      <pose>-1.10359 0.4616376 0 0 0 -0.61268</pose>
+    </include>
+    <include>
+      <uri>model://fence</uri>
+      <name>fence_0</name>
+      <pose>1.14072776 0.2879297 0 0 0 0.453318</pose>
+    </include>
+    <include>
+      <uri>model://fence</uri>
+      <name>fence_1</name>
+      <pose>-0.11096421 -1.5093513727 0 0 0 1.48581</pose>
+    </include>
+
+  </world>
+</sdf>
+

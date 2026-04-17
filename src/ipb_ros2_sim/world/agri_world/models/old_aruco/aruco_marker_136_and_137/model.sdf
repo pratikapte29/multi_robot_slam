@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="aruco_marker_136_and_137">
+    <static>true</static>
+
+    <link name="aruco_136_and_137">
+      <visual name="front">
+        <pose>1 0.001 0 0 1.5707900000000004 0</pose>
+        <geometry>
+          <box>
+            <size>0.35 0.002 0.35</size>
+          </box>
+        </geometry>
+
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 1</emissive>
+
+          <pbr>
+            <metal>
+              <albedo_map>
+                model://aruco/aruco_marker_136_and_137/materials/textures/marker_136.png
+              </albedo_map>
+              <emissive_map>
+                model://aruco/aruco_marker_136_and_137/materials/textures/marker_136.png
+              </emissive_map>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+
+      <visual name="back">
+        <pose>1 -0.001 0 0 -1.5707900000000004 3.1416</pose>
+        <geometry>
+          <box>
+            <size>0.35 0.002 0.35</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 1</emissive>
+
+          <pbr>
+            <metal>
+              <albedo_map>
+                model://aruco/aruco_marker_136_and_137/materials/textures/marker_137.png
+              </albedo_map>
+              <emissive_map>
+                model://aruco/aruco_marker_136_and_137/materials/textures/marker_137.png
+              </emissive_map>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+
+      <collision name="collision">
+        <pose>0.21558300000000002 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.2192 0.038 0.0888</size>
+          </box>
+        </geometry>
+        <surface>
+          <bounce>
+            <restitution_coefficient>0.01</restitution_coefficient>
+            <threshold>5.0</threshold>
+          </bounce>
+          <friction>
+            <ode>
+              <mu>5</mu>
+              <mu2>5</mu2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <soft_cfm>0.001</soft_cfm>
+              <!--"sponginess", 0.0=hard-->
+              <kp>10000.0</kp>
+              <kd>1000.0</kd>
+              <max_vel>0.01</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name="visual_wood">
+        <pose>0.21558300000000002 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://drc_practice_2x4/meshes/2x4x48.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+    </link>
+
+  </model>
+</sdf>

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="aruco_marker_53">
+    <static>true</static>
+
+    <link name="link">
+      <visual name="front">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.35 0.002 0.35</size>
+          </box>
+        </geometry>
+
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 1</emissive>
+
+          <pbr>
+            <metal>
+              <albedo_map>
+                model://aruco/aruco_marker_53/materials/textures/marker_53.png
+              </albedo_map>
+              <emissive_map>
+                model://aruco/aruco_marker_53/materials/textures/marker_53.png
+              </emissive_map>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+
+      <visual name="back">
+        <pose>0 -0.002 0 0 0 3.1416</pose>
+        <geometry>
+          <box>
+            <size>0.35 0.002 0.35</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0 0 0 1</ambient>
+          <diffuse>0 0 0 1</diffuse>
+        </material>
+      </visual>
+
+
+    </link>
+
+  </model>
+</sdf>

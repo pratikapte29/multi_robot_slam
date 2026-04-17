@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<robot name="jackal" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="robot_config_file" value="$(find ipb_ros2_sim)/config/robot_config.yaml" />
+  <xacro:property name="robot_config" value="${xacro.load_yaml(robot_config_file)}" />
+
+  <xacro:arg name="robot_namespace" default=""/>
+  <xacro:property name="ns" value="$(arg robot_namespace)"/>
+  <xacro:arg name="robot_id" default="0"/>
+  <xacro:property name="id" value="$(arg robot_id)"/>
+
+  <xacro:property name="PI" value="3.1415926535897931" />
+
+  <xacro:property name="wheelbase" value="0.262" />
+  <xacro:property name="track" value="0.37559" />
+  <xacro:property name="wheel_vertical_offset" value="0.0345" />
+  <xacro:property name="footprint_vertical_offset" value="-0.0655" />
+
+  <xacro:property name="wheel_radius" value="0.098" />
+  <xacro:property name="wheel_width" value="0.040" />
+
+  <xacro:property name="chassis_length" value="0.420" />
+  <xacro:property name="chassis_width" value="0.310" />
+  <xacro:property name="chassis_height" value="0.184" />
+  <xacro:property name="mass" value="16.523" />
+
+  <xacro:include
+    filename="$(find ipb_ros2_sim)/description/jackal/urdf/wheel.urdf.xacro" />
+  <xacro:include
+    filename="$(find ipb_ros2_sim)/description/sensors/urdf/imu.urdf.xacro" />
+  <xacro:include
+    filename="$(find ipb_ros2_sim)/description/sensors/urdf/sensor_stack.urdf.xacro" />
+  <xacro:include
+    filename="$(find ipb_ros2_sim)/description/plates/urdf/plates.urdf.xacro" />  
+
+  <material name="dark_grey">
+    <color rgba="0.2 0.2 0.2 1.0" />
+  </material>
+  <material name="light_grey">
+    <color rgba="0.4 0.4 0.4 1.0" />
+  </material>
+  <material name="yellow">
+    <color rgba="0.8 0.8 0.0 1.0" />
+  </material>
+  <material name="black">
+    <color rgba="0.15 0.15 0.15 1.0" />
+  </material>
+
+  <xacro:wheel prefix="${ns}front_left" ns="${ns}"> 
+    <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+  </xacro:wheel>
+  <xacro:wheel prefix="${ns}front_right" ns="${ns}">
+    <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+  </xacro:wheel>
+  <xacro:wheel prefix="${ns}rear_left" ns="${ns}">
+    <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+  </xacro:wheel>
+  <xacro:wheel prefix="${ns}rear_right" ns="${ns}">
+    <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+  </xacro:wheel>
+
+  <gazebo>
+
+    <!-- Diff drive plugin-->
+    <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+      <!-- DIFFERENCE BOTS -->
+      <!-- wheels -->
+      <left_joint>${ns}front_left_wheel</left_joint>
+      <left_joint>${ns}rear_left_wheel</left_joint>
+      <right_joint>${ns}front_right_wheel</right_joint>
+      <right_joint>${ns}rear_right_wheel</right_joint>
+
+      <!-- kinematics -->
+      <wheel_separation>${track}</wheel_separation>
+      <wheel_radius>${wheel_radius}</wheel_radius>
+
+      <!-- input -->
+      <topic>${ns}cmd_vel</topic>
+
+      <!-- output -->
+      <odom_topic>${ns}wheel_odom</odom_topic>
+      <tf_topic>${ns}tf</tf_topic>
+
+      <frame_id>${ns}odom</frame_id>
+      <child_frame_id>${ns}base_link</child_frame_id>
+
+      <odom_publish_frequency>${robot_config.wheel_odom.update_rate}</odom_publish_frequency>
+      <max_linear_velocity>${robot_config.max_linear_velocity}</max_linear_velocity>
+      <min_linear_velocity>${-robot_config.max_linear_velocity}</min_linear_velocity>
+      <max_angular_velocity>${robot_config.max_angular_velocity}</max_angular_velocity>
+      <min_angular_velocity>${-robot_config.max_angular_velocity}</min_angular_velocity>
+    </plugin>
+
+    <xacro:property name="wheel_normal_force" value="${(mass + 4 * wheel_mass) * 9.81 / 4}" />
+    <xacro:macro name="wheel_slip" params="link_name">
+
+      <wheel link_name="${link_name}">
+        <slip_compliance_lateral>1.0</slip_compliance_lateral>
+        <slip_compliance_longitudinal>1.0</slip_compliance_longitudinal>
+        <wheel_normal_force>${wheel_normal_force}</wheel_normal_force>
+        <wheel_radius>${wheel_radius}</wheel_radius>
+      </wheel>
+    </xacro:macro>
+
+    <plugin filename="gz-sim-wheel-slip-system" name="gz::sim::systems::WheelSlip">
+      <xacro:wheel_slip link_name="${ns}front_left_wheel_link" />
+      <xacro:wheel_slip link_name="${ns}front_right_wheel_link" />
+      <xacro:wheel_slip link_name="${ns}rear_left_wheel_link" />
+      <xacro:wheel_slip link_name="${ns}rear_right_wheel_link" />
+    </plugin>
+
+    <plugin
+      filename="gz-sim-joint-state-publisher-system"
+      name="gz::sim::systems::JointStatePublisher">
+      <topic>${ns}joint_states</topic>
+    </plugin>
+
+    <plugin filename="gz-sim-odometry-publisher-system" name="gz::sim::systems::OdometryPublisher">
+      <odom_frame>${ns}odom</odom_frame>
+      <robot_base_frame>${ns}base_link</robot_base_frame>
+      <odom_publish_frequency>${robot_config.odom_gt.update_rate}</odom_publish_frequency>
+      <odom_topic>${ns}odom_gt</odom_topic>
+    </plugin>
+
+  </gazebo>
+
+  <link name="${ns}base_link"></link>
+
+  <joint name="${ns}base_link_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="${ns}base_link" />
+    <child link="${ns}chassis_link" />
+  </joint>
+
+  <link name="${ns}chassis_link">
+    <visual>
+      <origin xyz="0 0 ${footprint_vertical_offset}" rpy="${PI/2} 0 ${PI/2}" />
+      <geometry>
+        <mesh filename="package://ipb_ros2_sim/description/jackal/meshes/jackal-base.stl" />
+      </geometry>
+      <material name="dark_grey" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${chassis_height/2}" />
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_height}" />
+      </geometry>
+    </collision>
+    <inertial>
+      <!-- Center of mass -->
+      <origin xyz="0.0  0.0 0.0" rpy="0 0 0" />
+      <mass value="${mass}" />
+      <!-- Moments of inertia: ( chassis without wheels ) -->
+      <inertia
+        ixx="0.3136" ixy="0.0" ixz="0.0"
+        iyy="0.3922" iyz="0.0"
+        izz="0.4485" />
+    </inertial>
+  </link>
+
+  <link name="${ns}front_fender_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://ipb_ros2_sim/description/jackal/meshes/jackal-fender.stl" />
+      </geometry>
+      <material name="yellow" />
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://ipb_ros2_sim/description/jackal/meshes/jackal-fender.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="${ns}front_fender_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="${ns}chassis_link" />
+    <child link="${ns}front_fender_link" />
+  </joint>
+
+  <link name="${ns}rear_fender_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://ipb_ros2_sim/description/jackal/meshes/jackal-fender.stl" />
+      </geometry>
+      <material name="yellow" />
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://ipb_ros2_sim/description/jackal/meshes/jackal-fender.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="${ns}rear_fender_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 ${PI}" />
+    <parent link="${ns}chassis_link" />
+    <child link="${ns}rear_fender_link" />
+  </joint>
+
+  <xacro:if value="${robot_config.use.imu}">
+    <xacro:imu parent_link="${ns}chassis_link" config="${robot_config.imu}" ns="${ns}" topic="imu">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:imu>
+  </xacro:if>
+
+  <xacro:sensor_stack parent_link="${ns}base_link" robot_config="${robot_config}" ns="${ns}" >
+    <origin xyz="0 0 0.184" rpy="0 0 0" />
+  </xacro:sensor_stack>
+
+  <xacro:plates parent_link="${ns}base_link" id="${id}" ns="${ns}" offset="0.2">
+    <origin xyz="-0.11 0 0.180" rpy="0 0 ${-PI/2}" />
+  </xacro:plates>
+
+</robot>

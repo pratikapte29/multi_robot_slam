@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="imu"
+        params="parent_link topic ns config *origin">
+        <xacro:property name="dummy_inertia" value="1e-09" />
+        <link name="${ns}imu_link">
+            <inertial>
+                <mass value="0.001" />
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <inertia ixx="${dummy_inertia}" ixy="0.0" ixz="0.0" iyy="${dummy_inertia}" iyz="0.0"
+                    izz="${dummy_inertia}" />
+            </inertial>
+        </link>
+        <joint name="${ns}imu_joint" type="fixed">
+            <parent link="${parent_link}" />
+            <child link="${ns}imu_link" />
+            <xacro:insert_block name="origin" />
+        </joint>
+
+        <xacro:macro name="imu_noise" params="config">
+            <noise type="gaussian">
+                <mean>${config.mean}</mean>
+                <stddev>${config.std}</stddev>
+                <bias_mean>${config.bias.mean}</bias_mean>
+                <bias_stddev>${config.bias.std}</bias_stddev>
+            </noise>
+        </xacro:macro>
+
+        <gazebo reference="${ns}imu_link">
+            <sensor name="imu_sensor" type="imu">
+                <always_on>true</always_on>
+                <update_rate>${config.update_rate}</update_rate>
+                <visualize>true</visualize>
+                <topic>${ns}${topic}</topic>
+                <gz_frame_id>${ns}imu_link</gz_frame_id>
+                <imu>
+                    <angular_velocity>
+                        <x>
+                            <xacro:imu_noise config="${config.noise.angular_velocity}" />
+                        </x>
+                        <y>
+                            <xacro:imu_noise config="${config.noise.angular_velocity}" />
+                        </y>
+                        <z>
+                            <xacro:imu_noise config="${config.noise.angular_velocity}" />
+                        </z>
+                    </angular_velocity>
+                    <linear_acceleration>
+                        <x>
+                            <xacro:imu_noise config="${config.noise.linear_acceleration}" />
+                        </x>
+                        <y>
+                            <xacro:imu_noise config="${config.noise.linear_acceleration}" />
+                        </y>
+                        <z>
+                            <xacro:imu_noise config="${config.noise.linear_acceleration}" />
+                        </z>
+                    </linear_acceleration>
+                </imu>
+            </sensor>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>

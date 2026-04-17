@@ -1,0 +1,43 @@
+#cam_front
+# Points
+- ros_topic_name: "/cam_front/points"
+  gz_topic_name: "/cam_front/depth_image/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
+
+# RGB image
+- ros_topic_name: "/cam_front/image_raw"
+  gz_topic_name: "/cam_front/image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+# Depth image
+- ros_topic_name: "/cam_front/depth_image"
+  gz_topic_name: "/cam_front/depth_image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+# RGB camera info
+- ros_topic_name: "/cam_front/camera_info"
+  gz_topic_name: "/cam_front/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  direction: GZ_TO_ROS
+
+#cam_up
+# RGB image
+- ros_topic_name: "/cam_up/image_raw"
+  gz_topic_name: "/cam_up/image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+# RGB camera info
+- ros_topic_name: "/cam_up/camera_info"
+  gz_topic_name: "/cam_up/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  gz_type_name: "gz.msgs.CameraInfo"
+  direction: GZ_TO_ROS

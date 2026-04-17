@@ -1,0 +1,27 @@
+services:
+  simulation:
+    image: moro_jazzy_image
+    container_name: simulation
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+    restart: "no"
+    network_mode: host
+    privileged: true
+    volumes:
+      - ./docker_zsh_history.txt:/home/dev/.zsh_history
+      - ./zsh.rc:/home/dev/.zshrc
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ../:/home/dev/ros_ws
+      - /dev/bus/usb:/dev/bus/usb
+    environment:
+      - DISPLAY=${DISPLAY}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu, compute, utility, graphics]

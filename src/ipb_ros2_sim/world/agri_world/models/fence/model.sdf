@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="fence">
+    <static>true</static>
+    <link name="link">
+      <pose>0 0 0.497 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.1 4.4 1</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <box>
+            <size>0.1 4.4 1</size>
+          </box>
+        </geometry>
+
+        <material>
+          <ambient>0.8 0.8 0.8 1.0</ambient>
+          <diffuse>0.5 0.5 0.5 1.0</diffuse>
+          <specular>0.2 0.2 0.2 1.0</specular>
+          
+          <pbr>
+            <metal>
+              <albedo_map>
+                model://fence/materials/textures/woodboarding4.jpg
+              </albedo_map>
+              <emissive_map>
+                model://fence/materials/textures/woodboarding4.jpg
+              </emissive_map>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

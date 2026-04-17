@@ -1,0 +1,47 @@
+- ros_topic_name: "/robot/imu"
+  gz_topic_name: "/robot/imu"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "gz.msgs.IMU"
+  direction: GZ_TO_ROS
+
+# Topic published by DiffDrive plugin
+- ros_topic_name: "/robot/wheel_odom"
+  gz_topic_name: "/robot/wheel_odom"
+  ros_type_name: "nav_msgs/msg/Odometry"
+  gz_type_name: "gz.msgs.Odometry"
+  direction: GZ_TO_ROS
+
+# Topic published by JointStatePublisher plugin
+- ros_topic_name: "/robot/joint_states"
+  gz_topic_name: "/robot/joint_states"
+  ros_type_name: "sensor_msgs/msg/JointState"
+  gz_type_name: "gz.msgs.Model"
+  direction: GZ_TO_ROS
+
+# Topic subscribed to by DiffDrive plugin
+- ros_topic_name: "/robot/cmd_vel"
+  gz_topic_name: "/robot/cmd_vel"
+  ros_type_name: "geometry_msgs/msg/TwistStamped"
+  gz_type_name: "gz.msgs.Twist"
+  direction: ROS_TO_GZ
+
+# Ground truth odometry published by Gazebo's OdometryPublisher plugin
+- ros_topic_name: "/robot/odom_gt"
+  gz_topic_name: "/robot/odom_gt"
+  ros_type_name: "nav_msgs/msg/Odometry"
+  gz_type_name: "gz.msgs.Odometry"
+  direction: GZ_TO_ROS
+
+# 2D Lidar
+- ros_topic_name: "/robot/lidar_2d"
+  gz_topic_name: "/robot/scan"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "gz.msgs.LaserScan"
+  direction: GZ_TO_ROS
+
+# 3D Lidar
+- ros_topic_name: "/robot/lidar_3d"
+  gz_topic_name: "/robot/lidar_3d/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS

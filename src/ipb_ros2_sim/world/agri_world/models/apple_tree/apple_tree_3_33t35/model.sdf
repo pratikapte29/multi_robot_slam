@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="apple_tree_3">
+    <static>true</static>
+
+    <!-- TREE -->
+    <include>
+      <uri>model://oak_tree/</uri>      
+      <name>Oak tree</name>
+    </include>
+
+
+
+    <!-- APPLES -->
+    <include>
+      <name>apple_1</name>
+      <uri>model://ideal_apple</uri>
+      <pose>-1.752 -2.875 2.586 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>apple_2</name>
+      <uri>model://ideal_apple</uri>
+      <pose>-2.49 0.712 4.282 0 0 0</pose>
+    </include>
+
+    <include>
+      <name>apple_3</name>
+      <uri>model://ideal_apple</uri>
+      <pose>2.054 2.274 2.194 0 0 0</pose>
+    </include>
+
+
+
+
+    <include>
+      <name>aruco_marker_988</name>
+      <uri>model://aruco/aruco_marker_988</uri>
+      <pose>-1.986918569 1.41469 3.0703 -1.54322 0 0</pose>
+    </include>
+
+    <include>
+      <name>aruco_marker_989</name>
+      <uri>model://aruco/aruco_marker_989</uri>
+      <pose>2.8101699 1.37625348568 2.665223 -1.4974 0.00186592 -0.025344</pose>
+    </include>
+
+    <include>
+      <name>aruco_marker_990</name>
+      <uri>model://aruco/aruco_marker_990</uri>
+      <pose>-0.7853065729 -3.25889325 3.02521 -1.49353 0 -2.09</pose>
+    </include>
+
+
+    <include>
+      <uri>model://fence</uri>
+      <name>fence</name>
+      <pose>-1.10359 0.4616376 0 0 0 -0.61268</pose>
+    </include>
+    <include>
+      <uri>model://fence</uri>
+      <name>fence_0</name>
+      <pose>1.14072776 0.2879297 0 0 0 0.453318</pose>
+    </include>
+    <include>
+      <uri>model://fence</uri>
+      <name>fence_1</name>
+      <pose>-0.11096421 -1.5093513727 0 0 0 1.48581</pose>
+    </include>
+
+  </model>
+</sdf>

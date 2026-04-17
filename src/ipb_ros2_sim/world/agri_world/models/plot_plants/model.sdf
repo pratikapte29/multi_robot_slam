@@ -1,0 +1,264 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="apple_tree_3">
+    <static>true</static>
+
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02</name>
+      <pose>-6.5238521195926209 -1.3197065425846546 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_0</name>
+      <pose>-9.0144503749535652 0.03208451928874112 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_1</name>
+      <pose>-7.4608294909048887 0.71265503352261828 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_2</name>
+      <pose>-11.037517403450133 -1.1761727717954589 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_3</name>
+      <pose>-12.358493631858003 0.79931075215416847 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_4</name>
+      <pose>-9.6754261656984006 2.5343619574922611 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_5</name>
+      <pose>-5.9681316790311332 4.7559215876561716 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_6</name>
+      <pose>-13.165927395010165 4.5433894795313616 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_7</name>
+      <pose>-15.497480418581022 2.086729843398806 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_8</name>
+      <pose>-8.8532594345069526 7.0301441963989717 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_9</name>
+      <pose>-13.528369893256619 8.8235856103353072 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_10</name>
+      <pose>-14.772831651182997 -0.41099563087834201 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_11</name>
+      <pose>-7.8169298766351387 10.936535240366252 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_12</name>
+      <pose>-15.112451707157053 14.802255018531081 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_13</name>
+      <pose>-17.06873372401305 10.428818550152849 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_14</name>
+      <pose>-11.210997798745899 13.747163941468585 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant</name>
+      <pose>-10.138640338585502 5.1732708293419387 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_0</name>
+      <pose>-12.63529765968461 2.6046760126361841 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_1</name>
+      <pose>-7.123807156622691 2.9851796296729143 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_2</name>
+      <pose>-16.317500097149249 5.9637112153606449 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_3</name>
+      <pose>-13.977221364842949 0.80121481628962288 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_4</name>
+      <pose>-9.7685689830891071 0.90794974916072801 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_5</name>
+      <pose>-7.3807049798261781 -0.66650233942588499 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_6</name>
+      <pose>-12.814875385228 -0.69577411039045023 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_7</name>
+      <pose>-6.6269212970687112 8.6523698065905048 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_8</name>
+      <pose>-10.469067130113322 10.458941983114634 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_9</name>
+      <pose>-14.0836188415782 12.10068925881118 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_10</name>
+      <pose>-12.468753942269879 7.2270925497055458 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_11</name>
+      <pose>-6.6466883092765183 12.758387409014782 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_12</name>
+      <pose>-8.9891850362784851 15.967595314751602 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_13</name>
+      <pose>-13.678174147522345 16.497089080069529 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_14</name>
+      <pose>-15.047536719286775 7.3360702494782331 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_15</name>
+      <pose>-11.437810302795297 3.8014341031419097 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_16</name>
+      <pose>-15.396612550799226 3.5206174276424202 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_17</name>
+      <pose>-9.5034999896281107 8.7920097381859481 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_18</name>
+      <pose>-11.576327947451905 1.9523467017627703 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_19</name>
+      <pose>-10.96654089307388 -0.013332713214259967 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_20</name>
+      <pose>-6.6313766833774022 14.914409422679771 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_21</name>
+      <pose>-7.9013671653295843 5.2113399589959011 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_22</name>
+      <pose>-13.014775314346306 5.8360982635722358 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_23</name>
+      <pose>-16.255432223116408 8.8193262568095872 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_24</name>
+      <pose>-16.638036705599234 12.97643766154126 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_25</name>
+      <pose>-12.59601860719145 10.561912161595805 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_26</name>
+      <pose>-9.1888055424467296 12.983284548702455 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_27</name>
+      <pose>-6.5804844200926835 7.168565172712885 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://big_plant</uri>
+      <name>big_plant_28</name>
+      <pose>-11.04617252491898 8.4637989954926844 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_15</name>
+      <pose>-11.543870302377083 10.710455083389649 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_16</name>
+      <pose>-11.169779439340823 5.7002438263945647 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_17</name>
+      <pose>-14.97976340059067 5.4337679081476242 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_18</name>
+      <pose>-8.4470460215821639 3.8059090022580317 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://courgette_02</uri>
+      <name>courgette_02_19</name>
+      <pose>-7.8621551024002247 14.215813599868557 0 0 0 0</pose>
+    </include>
+
+  </model>
+</sdf>
+

@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="VLP-16">
+
+    <xacro:macro name="lidar3d"
+        params="*origin parent_link name topic config">
+        <xacro:property name="M_PI" value="3.1415926535897931" />
+        <xacro:property name="dummy_inertia" value="1e-09" />
+
+        <joint name="${name}_base_joint" type="fixed">
+            <xacro:insert_block name="origin" />
+            <parent link="${parent_link}" />
+            <child link="${name}_mount_link" />
+        </joint>
+
+        <link name="${name}_mount_link">
+            <inertial>
+                <mass value="0.001" />
+                <origin xyz="0 0 0.03585" />
+                <inertia ixx="${dummy_inertia}" ixy="0"
+                    ixz="0"
+                    iyy="${dummy_inertia}" iyz="0"
+                    izz="${dummy_inertia}" />
+            </inertial>
+            <visual>
+                <geometry>
+                    <mesh
+                        filename="package://ipb_ros2_sim/description/sensors/meshes/VLP16_base_1.dae" />
+                </geometry>
+            </visual>
+            <visual>
+                <geometry>
+                    <mesh
+                        filename="package://ipb_ros2_sim/description/sensors/meshes/VLP16_base_2.dae" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0.03585" />
+                <geometry>
+                    <cylinder radius="0.0516" length="0.0717" />
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="${name}_joint" type="fixed">
+            <origin xyz="0 0 0.0377" rpy="0 0 0" />
+            <parent link="${name}_mount_link" />
+            <child link="${name}_link" />
+        </joint>
+
+        <link name="${name}_link">
+            <inertial>
+                <mass value="0.01" />
+                <origin xyz="0 0 0" />
+                <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 -0.0377" />
+                <geometry>
+                    <mesh
+                        filename="package://ipb_ros2_sim/description/sensors/meshes/VLP16_scan.dae" />
+                </geometry>
+            </visual>
+        </link>
+
+        <!-- Gazebo requires the velodyne_gazebo_plugins package -->
+        <gazebo reference="${name}_link">
+            <sensor name='lidar3d' type='gpu_lidar'>
+                <gz_frame_id>${name}_link</gz_frame_id>
+                <always_on>true</always_on>
+                <visualize>true</visualize>
+                <update_rate>${config.update_rate}</update_rate>
+                <topic>${topic}</topic>
+                <pose relative_to="${name}_link">0 0 0 0 0 0</pose>
+                <lidar>
+                    <scan>
+                        <vertical>
+                            <samples>${config.beams}</samples>
+                            <resolution>1</resolution>
+                            <min_angle>${config.vertical_fov.min / 180 * M_PI}</min_angle>
+                            <max_angle>${config.vertical_fov.max / 180 * M_PI}</max_angle>
+                        </vertical>
+                        <horizontal>
+                            <samples>${config.samples}</samples>
+                            <resolution>1</resolution>
+                            <min_angle>${config.horizontal_fov.min / 180 * M_PI}</min_angle>
+                            <max_angle>${config.horizontal_fov.max / 180 * M_PI}</max_angle>
+                        </horizontal>
+                    </scan>
+                    <range>
+                        <min>${config.range.min}</min>
+                        <max>${config.range.max}</max>
+                        <resolution>0.001</resolution>
+                    </range>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>${config.noise.mean}</mean>
+                        <stddev>${config.noise.std}</stddev>
+                    </noise>
+                </lidar>
+            </sensor>
+        </gazebo>
+
+    </xacro:macro>
+</robot>

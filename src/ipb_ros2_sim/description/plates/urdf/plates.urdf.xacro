@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="plates">
+  <xacro:macro name="plates" params="ns id parent_link offset *joint_pose">
+  <joint name="${ns}number_plate_joint${id}" type="fixed">
+    <parent link="${parent_link}" />
+    <child link="${ns}number_plate${id}" />
+    <xacro:insert_block name="joint_pose" />
+  </joint>
+
+  <link name="${ns}number_plate${id}">
+    <visual>
+      <origin xyz="0 ${offset} 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://ipb_ros2_sim/description/plates/meshes/ipb.stl" scale="0.008 0.008 0.001"/>
+      </geometry>
+      <material name="yellow" />
+    </visual>
+
+    <visual>
+      <geometry>
+        <mesh filename="package://ipb_ros2_sim/description/plates/meshes/robot${id}.stl" scale="0.008 0.008 0.001"/>
+      </geometry>
+      <material name="yellow" />
+    </visual>
+  </link>
+
+  </xacro:macro>
+</robot>
+
