@@ -16,6 +16,7 @@ RUN apt-get update && apt-get upgrade -y \
   sudo \
   curl \
   wget \
+  neovim \
   build-essential \
   tree \
   openssh-client \
