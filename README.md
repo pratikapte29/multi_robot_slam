@@ -67,6 +67,11 @@ cd <root-of-checkout>/docker
 docker compose down --remove-orphans
 docker compose build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
 
+# Add user to docker group
+sudo usermod -aG docker $USER
+
+newgrp docker
+
 # Build (if needed) and start container
 docker compose up -d
 
