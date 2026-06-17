@@ -1,0 +1,321 @@
+: 1777493192:0;ls 
+: 1777493195:0;cd src 
+: 1777493196:0;ls
+: 1777493199:0;cd ipb_ros2_sim
+: 1777493200:0;ls
+: 1777493593:0;cd ..
+: 1777493594:0;cd .
+: 1777493595:0;cd ..
+: 1777493606:0;source /opt/ros/jazzy/setup.zsh
+: 1777493619:0;cd .
+: 1777493620:0;cd ..
+: 1777493622:0;source /opt/ros/jazzy/setup.zsh
+: 1777493628:0;cd ros_ws
+: 1777493630:0;colcon build  --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+: 1777493676:0;source install/local_setup.zsh
+: 1777493770:0;source /opt/ros/jazzy/setup.zsh  \
+
+: 1777493799:0;export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
+: 1777493804:0;export ROS_DOMAIN_ID=42
+: 1777493916:0;export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+: 1777493941:0;tmux 
+: 1777493961:0;source /opt/ros/jazzy/setup.zsh  \
+
+: 1777493973:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1777494036:0;ros2 launch ipb_ros2_sim all.launch.py 
+: 1777494117:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777494191:0;killall gzserver 
+: 1777494230:0;export SVGA_VGPU10=0
+: 1777494240:0;roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
+: 1777494254:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777494373:0;glxinfo | grep "OpenGL"
+: 1777494393:0;apt update 
+: 1777494403:0;apt install -y mesa-utils 
+: 1777494410:0;sudo apt update 
+: 1777494435:0;sudo apt install -y mesa-utils 
+: 1777494442:0;glxinfo | grep "OpenGL"
+: 1777494497:0;exit
+: 1777494531:0;exit 
+: 1777494600:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777494640:0;export QT_X11_NO_MITSHM=1
+: 1777494650:0;QT_QPA_PLATFORM=xcb
+: 1777494654:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777495992:0;gz sim 
+: 1777496083:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777496121:0;ps
+: 1777496126:0;top 
+: 1777496253:0;ros2 run teleop_twist_keyboard teleop_twist_keyboard \\
+  --ros-args \\
+  -p stamped:=true \\
+  -r cmd_vel:=/<namespace_from_sim_config>/cmd_vel\
+
+: 1777496309:0;ros2 run teleop_twist_keyboard teleop_twist_keyboard \\
+  --ros-args \\
+  -p stamped:=true \\
+  -r cmd_vel:=/pratikapte29/cmd_vel\
+
+: 1777496348:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777496371:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=1\
+
+: 1777496935:0;gz sim shapes.sdf 
+: 1777497090:0;sudo usermod -aG video $USER\
+sudo usermod -aG render $USER
+: 1777497110:0;sudo usermod -aG video $USER
+: 1777497137:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=1\
+
+: 1777725351:0;source /opt/ros/jazzy/setup.zsh
+: 1777725360:0;colcon build  --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+: 1777725366:0;source install/local_setup.zsh
+: 1777725379:0;source /opt/ros/jazzy/setup.zsh  
+: 1777725408:0;source ./install/local_setup.zsh
+: 1777725412:0;ls
+: 1777725420:0;export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
+: 1777725425:0;export ROS_DOMAIN_ID=42
+: 1777725432:0;sudo apt install ros-jazzy-rmw-zenoh-cpp
+: 1777725441:0;export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+: 1777725453:0;source /opt/ros/jazzy/setup.bash
+: 1777725465:0;source /opt/ros/jazzy/setup.zsh
+: 1777725470:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1777725494:0;tmux 
+: 1777725673:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1777725726:0;ros2 launch ipb_ros2_sim all.launch.py
+: 1777726589:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2
+: 1777726617:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1777726623:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2
+: 1777726961:0;src/ros2_masterproject/src/
+: 1777726974:0;cd src
+: 1777726976:0;ls
+: 1777726999:0;git clone https://github.com/blackcoffeerobotics/gazebo-ros-actor-plugin.git
+: 1777727009:0;cd ..
+: 1777727015:0;colcon build --symlink-install
+: 1777727035:0;source install/setup.zsh 
+: 1777727048:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1777727056:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777987707:0;tmux 
+: 1777988135:0;sudo apt install ros-jazzy-slam-toolbox
+: 1777988266:0;source /opt/ros/jazzy/setup.zsh
+: 1777988277:0;sudo apt install ros-jazzy-slam-toolbox
+: 1777988367:0;apt search ros-jazzy-slam-toolbox 
+: 1777988404:0;cd src 
+: 1777988404:0;ls
+: 1777988416:0;git clone https://github.com/SteveMacenski/slam_toolbox.git
+: 1777988434:0;cd ..
+: 1777988440:0;rosdep update 
+: 1777988471:0;rosdep install --from-paths src --ignore-src -r -y
+: 1777988550:0;sudo apt update 
+: 1777988591:0;sudo apt install -y software-properties-common 
+: 1777988766:0;sudo apt upgrade
+: 1777988789:0;sudo apt install ros-jazzy-nav2-bringup
+: 1777988859:0;sudo apt install ros-jazzy-slam-toolbox
+: 1777995600:0;ros2 topic list | grep cmd_vel
+: 1777995621:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1777995627:0;ros2 topic list | grep cmd_vel
+: 1777995885:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777996013:0;ros2 run teleop_twist_keyboard teleop_twist_keyboard \\
+  --ros-args -r /cmd_vel:=/TT_robot0/cmd_vel
+: 1777996208:0;ros2 topic echo /TT_robot0/cmd_vel
+: 1777996352:0;ros2 run teleop_twist_keyboard teleop_twist_keyboard \\
+  --ros-args -r /cmd_vel:=/TT_robot0/cmd_vel \\
+  -p stamped:=true
+: 1777996988:0;sudo apt install ros-jazzy-nav2-msgs
+: 1777997008:0;ros2 run tf2_ros tf2_echo odom TT_robot0/base_link
+: 1777997040:0;ros2 topic echo /tf --once
+: 1777997074:0;tmux kill session
+: 1777997080:0;tmux kill-session
+: 1777997090:0;tmux 
+: 1777997113:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1777997167:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777997247:0;ros2 topic echo /tf --once
+: 1777997314:0;tmux new-session -d
+: 1777997328:0;tmux new -d
+: 1777997390:0;tmux
+: 1777997405:0;ros2 topic echo /tf --once
+: 1777997427:0;ros2 topic echo /tf_static --once
+: 1777998405:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777998466:0;ros2 node list | grep slam
+: 1777998520:0;ros2 node info /TT_robot0/slam_toolbox
+: 1777998551:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777998565:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2 2>&1 | grep -iE "slam|error|exception|traceback|could not|no such"
+: 1777998951:0;colcon build --packages-select ipb_ros2_sim && source install/setup.bash
+: 1777998961:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1777999022:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2 2>&1 | grep -iE "slam|error|exception|traceback|could not|no such"
+: 1777999086:0;ros2 node list | grep slam 
+: 1777999213:0;ls /home/dev/ros_ws/install/ipb_ros2_sim/share/ipb_ros2_sim/config/slam/
+: 1777999258:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2 2>&1 | grep -iE "slam|error|exception|traceback|could not|no such"
+: 1777999324:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1777999328:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2 2>&1 | grep -iE "slam|error|exception|traceback|could not|no such"
+: 1777999360:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1777999434:0;ros2 run teleop_twist_keyboard teleop_twist_keyboard \\
+  --ros-args -r /cmd_vel:=/TT_robot0/cmd_vel \\
+  -p stamped:=true
+: 1777999541:0;ls
+: 1777999544:0;cd src
+: 1777999545:0;ls
+: 1777999548:0;cd slam_toolbox
+: 1777999549:0;ls
+: 1777999579:0;cd launch
+: 1777999580:0;ls
+: 1777999597:0;cd ..
+: 1777999602:0;cd sr
+: 1777999604:0;cd src
+: 1777999605:0;ls
+: 1777999609:0;cd ..
+: 1778000052:0;ros2 run teleop_twist_keyboard teleop_twist_keyboard \\
+  --ros-args -r /cmd_vel:=/TT_robot0/cmd_vel \\
+  -p stamped:=true
+: 1778000708:0;ros2 topic list | grep odom
+: 1778000739:0;ros2 run tf2_tools view_frames
+: 1778001018:0;tmux kill-session
+: 1778001021:0;exit 
+: 1779955451:0;tmux 
+: 1780862123:0;ls
+: 1780862172:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780862225:0;ros2 launch ipb_ros2_sim slam.launch.py max_robot_count:=2
+: 1780862341:0;tmux
+: 1780862368:0;source /opt/ros/jazzy/setup.zsh
+: 1780862375:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1780862433:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780862438:0;ros2 launch ipb_ros2_sim slam.launch.py max_robot_count:=2
+: 1780862485:0;ros2 topic list | grep scan
+: 1780862498:0;ros2 topic info /TT_robot0_scan
+: 1780862534:0;ros2 topic list | grep TT_robot0
+: 1780862640:0;ls src/ipb_ros2_sim/config/bridge/
+: 1780862719:0;ros2 topic list | grep lidar
+: 1780862796:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780862805:0;ros2 launch ipb_ros2_sim slam.launch.py max_robot_count:=2
+: 1780862829:0;ros2 topic list | grep map
+: 1780863832:0;ls ~/ros2_ws/src/ipb_ros2_sim/config/simulation/
+: 1780863841:0;ls /src/ipb_ros2_sim/config/simulation/
+: 1780863860:0;ls src/ipb_ros2_sim/config/simulation/
+: 1780863935:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780863955:0;ros2 launch ipb_ros2_sim slam.launch.py 
+: 1780864086:0;ros2 topic list | grep map
+: 1780864103:0;ros2 topic hz /TT_robot0/lidar_2d
+: 1780864131:0;ros2 run tf2_tools view_frames
+: 1780864150:0;evincs frames.pdf
+: 1780864161:0;evince frames.pdf 
+: 1780864282:0;ros2 topic echo /TT_robot0/tf --once
+: 1780864317:0;gz topic -l | grep tf
+: 1780864328:0;gz topic -l | grep odom
+: 1780864442:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780864449:0;ros2 launch ipb_ros2_sim slam.launch.py 
+: 1780864513:0;ros2 topic echo /TT_robot0/tf --once
+: 1780864592:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780864602:0;ros2 launch ipb_ros2_sim slam.launch.py 
+: 1780864626:0;ros2 topic echo /TT_robot0/tf --once
+: 1780864632:0;ros2 topic list | grep map
+: 1780864655:0;ros2 topic hz /TT_robot0/lidar_2d
+: 1780864745:0;ros2 topic hz /TT_robot0/map
+: 1780864771:0;ros2 node list | grep slam
+: 1780864793:0;ros2 node info /TT_robot0/slam_toolbox
+: 1780864947:0;tmux capture-pane -pS - | xclip -selection clipboard  
+: 1780864976:0;sudo apt update && sudo apt install xclip 
+: 1780864990:0;tmux capture-pane -pS - | xclip -selection clipboard  
+: 1780865074:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780865080:0;ros2 launch ipb_ros2_sim slam.launch.py 
+: 1780865112:0;ros2 node info /TT_robot0/slam_toolbox
+: 1780865128:0;tmux capture-pane -pS - | xclip -selection clipboard
+: 1780865143:0;ros2 lifecycle get /TT_robot0/slam_toolbox
+: 1780865166:0;ros2 param get /TT_robot0/slam_toolbox autostart
+: 1780865188:0;ros2 lifecycle set /TT_robot0/slam_toolbox configure
+: 1780865195:0;ros2 lifecycle set /TT_robot0/slam_toolbox activate
+: 1780865202:0;ros2 node info /TT_robot0/slam_toolbox
+: 1780865209:0;tmux capture-pane -pS - | xclip -selection clipboard
+: 1780865351:0;ros2 topic list | grep map
+: 1780865390:0;ros2 topic echo /map --once | grep frame_id
+: 1780865456:0;ros2 lifecycle get /TT_robot0/slam_toolbox
+: 1780865484:0;ros2 topic hz /map
+: 1780865558:0;ros2 topic echo /TT_robot0/tf --once | grep frame_id
+: 1780865585:0;ros2 topic echo /tf --once
+: 1780865592:0;tmux capture-pane -pS - | xclip -selection clipboard
+: 1780865945:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780865975:0;ros2 launch ipb_ros2_sim slam.launch.py 
+: 1780866004:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780866006:0;ros2 launch ipb_ros2_sim slam.launch.py 
+: 1780866071:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780866075:0;ros2 launch ipb_ros2_sim slam.launch.py 
+: 1780866241:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780866243:0;ros2 launch ipb_ros2_sim slam.launch.py 
+: 1780866259:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780866261:0;ros2 launch ipb_ros2_sim slam.launch.py 
+: 1780866299:0;ros2 pkg list | grep topic_tools
+: 1780866313:0;sudo apt install ros-$ROS_DISTRO-topic-tools
+: 1780866339:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1780866343:0;ros2 launch ipb_ros2_sim slam.launch.py 
+: 1780866401:0;for robot in TT_robot0 TT_robot1 TT_robot2; do ros2 lifecycle set /$robot/slam_toolbox configure && ros2 lifecycle set /$robot/slam_toolbox activate; done
+: 1780866416:0;ros2 topic echo /tf --once | grep frame_id
+: 1780866512:0;ros2 topic hz 
+: 1780866517:0;ros2 topic hz /map
+: 1780866541:0;ros2 topic hz /TT_robot0/lidar_2d
+: 1780866549:0;ros2 run tf2_ros tf2_echo map TT_robot0/odom
+: 1780866576:0;ros2 topic echo /map --once
+: 1780866649:0;ros2 topic pub /TT_robot0/cmd_vel geometry_msgs/msg/TwistStamped "{header: {frame_id: 'base_link'}, twist: {linear: {x: 0.5}, angular: {z: 0.3}}}" --once
+: 1780866683:0;ros2 topic echo /TT_robot0/slam_toolbox/scan_visualization --once
+: 1780866769:0;tmux
+: 1780866789:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1780866794:0;source /opt/ros/jazzy/setup.zsh
+: 1780866795:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1780866829:0;source /opt/ros/jazzy/setup.zsh
+: 1780866851:0;colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+: 1780867047:0;export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+: 1780867052:0;source /opt/ros/jazzy/setup.zsh
+: 1780867056:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1780867106:0;pkill -f rmw_zenohd
+: 1780867110:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1780867182:0;ros2 launch ipb_ros2_sim all.launch.py sim_config:=indoor_multi max_robot_count:=2\
+
+: 1780867328:0;exit
+: 1780907423:0;tmux
+: 1780907448:0;source /opt/ros/jazzy/setup.zsh
+: 1780907453:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1781716346:0;tmux 
+: 1781716375:0;ros2 run rmw_zenoh_cpp rmw_zenohd
+: 1781716980:0;ros2 launch ipb_ros2_sim slam.launch.py
+: 1781717027:0;ros2 topic list | grep map
+: 1781717096:0;ros2 topic echo /TT_robot0/lidar_2d
+: 1781717104:0;ros2 topic list | grep lidar
+: 1781717149:0;colcon build --packages-select ipb_ros2_sim
+: 1781717157:0;ros2 launch ipb_ros2_sim slam.launch.py
+: 1781717177:0;ros2 topic list | grep map
+: 1781717183:0;ros2 topic echo /TT_robot0/map
+: 1781717216:0;ros2 node list | grep slam
+: 1781717246:0;ros2 node info /TT_robot0/slam_toolbox
+: 1781717296:0;tmux capture-pane -S - -p | xclip -selection clipboard
+: 1781717309:0;clear
+: 1781717311:0;ros2 node info /TT_robot0/slam_toolbox
+: 1781717315:0;tmux capture-pane -S - -p | xclip -selection clipboard
+: 1781717346:0;ros2 lifecycle get /TT_robot0/slam_toolbox
+: 1781717357:0;ros2 lifecycle set /TT_robot0/slam_toolbox configure
+: 1781717364:0;ros2 lifecycle set /TT_robot0/slam_toolbox activate
+: 1781717371:0;ros2 topic list | grep map
+: 1781718458:0;colcon build --packages-select ipb_ros2_sim && source install/setup.zsh
+: 1781718475:0;ls
+: 1781718479:0;source install/setup.zsh 
+: 1781718504:0;ros2 launch ipb_ros2_sim slam.launch.py
+: 1781718520:0;ros2 topic list | grep map
+: 1781718647:0;ros2 lifecycle set /TT_robot0/slam_toolbox configure
+: 1781718657:0;ros2 lifecycle set /TT_robot0/slam_toolbox activate
+: 1781723532:0;colcon build --packages-select ipb_ros2_sim
+: 1781723600:0;ros2 launch ipb_ros2_sim slam.launch.py
+: 1781723634:0;colcon build --packages-select ipb_ros2_sim
+: 1781723637:0;ros2 launch ipb_ros2_sim slam.launch.py
+: 1781723673:0;colcon build --packages-select ipb_ros2_sim
+: 1781723675:0;ros2 launch ipb_ros2_sim slam.launch.py
+: 1781723740:0;ros2 lifecycle set /TT_robot0/slam_toolbox configure
+: 1781723749:0;ros2 lifecycle set /TT_robot0/slam_toolbox activate
+: 1781723757:0;ros2 topic list | grep map
+: 1781723851:0;colcon build --packages-select ipb_ros2_sim
+: 1781723855:0;ros2 launch ipb_ros2_sim slam.launch.py
+: 1781723874:0;ros2 topic list | grep map
