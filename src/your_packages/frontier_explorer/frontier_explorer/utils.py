@@ -20,18 +20,18 @@ def cell_entropy(p: float) -> float:
     return -(p * math.log2(p) + (1 - p) * math.log2(1 - p))
 
 
-def map_entropy(map: np.ndarray) -> float:
-    """Computes total map entropy by only taking into consideration cells that are "unknown".
-    Map input is from nav_msgs/msg/OccupancyGrid Message which by convention has unknown regions valued at -1
+# def map_entropy(map: np.ndarray) -> float:
+#     """Computes total map entropy by only taking into consideration cells that are "unknown".
+#     Map input is from nav_msgs/msg/OccupancyGrid Message which by convention has unknown regions valued at -1
 
-    Args:
-        map (np.ndarray): current available map 
+#     Args:
+#         map (np.ndarray): current available map 
 
-    Returns:
-        float: _description_
-    """
+#     Returns:
+#         float: _description_
+#     """
 
-    return float(np.sum(map == -1))
+#     return float(np.sum(map == -1))
 
 
 def compute_information_gain(
@@ -62,7 +62,17 @@ def compute_information_gain(
         # region to be checked for unknown cells:
         region = map[r_min: r_max, c_min: c_max]
         # check for total number of unknown cells within the region covered by lidar
-        info_gains[tuple(cell)] = float(np.sum(region == -1))  
+        total = 0.0
+        for val in region.flat:
+            if val == -1:
+                p = 0.5        # unknown → maximum uncertainty
+            elif val == 0:
+                p = 0.01       # free
+            else:
+                p = val / 100.0  # occupied
+            total += cell_entropy(p)
+        
+        info_gains[tuple(cell)] = total
 
     return info_gains
 

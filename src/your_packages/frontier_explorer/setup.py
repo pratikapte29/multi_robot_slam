@@ -11,7 +11,11 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
+    install_requires=[
+        'setuptools',
+        'scikit-learn',
+        'scipy'
+    ],
     zip_safe=True,
     maintainer='pratik',
     maintainer_email='pratikapte2911@gmail.com',
@@ -24,6 +28,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'frontier_explorer=frontier_explorer.frontier_explorer:main',
         ],
     },
 )

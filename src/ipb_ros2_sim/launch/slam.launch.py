@@ -54,6 +54,15 @@ def generate_launch_description():
             output='screen',
         ))
 
+        nodes.append(Node(
+            package='topic_tools',
+            executable='relay',
+            name=f'map_relay_{robot_name}',
+            namespace=robot_name,
+            arguments=['/map', 'map'],
+            output='screen',
+        ))
+
     lifecycle_nodes = [
         '/TT_robot0/slam_toolbox',
         '/TT_robot1/slam_toolbox', 
