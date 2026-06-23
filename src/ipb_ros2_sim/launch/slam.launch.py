@@ -5,9 +5,21 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
+from launch_ros.actions import Node
+from launch.substitutions import LaunchConfiguration
+from nav2_common.launch import HasNodeParams
+from launch.conditions import IfCondition
+
+from launch.actions import DeclareLaunchArgument
+
 
 def generate_launch_description():
     pkg_share = get_package_share_directory('ipb_ros2_sim')
+
+    nav2_params_file = os.path.join(
+        get_package_share_directory('frontier_explorer'),
+        'config', 'nav2_params.yaml'
+    )
 
     all_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -60,6 +72,85 @@ def generate_launch_description():
             name=f'map_relay_{robot_name}',
             namespace=robot_name,
             arguments=['/map', 'map'],
+            output='screen',
+        ))
+
+        nodes.append(Node(
+            package='nav2_controller',
+            executable='controller_server',
+            name='controller_server',
+            namespace=robot_name,
+            parameters=[
+                nav2_params_file, 
+                {
+                'controller_frequency': 20.0,
+                'use_sim_time': True,
+            }],
+            output='screen',
+        ))
+        
+        nodes.append(Node(
+            package='nav2_planner',
+            executable='planner_server',
+            name='planner_server',
+            namespace=robot_name,
+            parameters=[
+                nav2_params_file,
+                {
+                'expected_planner_frequency': 20.0,
+                'use_sim_time': True,
+            }],
+            output='screen',
+        ))
+        
+        nodes.append(Node(
+            package='nav2_behaviors',
+            executable='behavior_server',
+            name='behavior_server',
+            namespace=robot_name,
+            parameters=[
+                nav2_params_file,
+                {
+                'use_sim_time': True,
+                'local_frame': f'{robot_name}/odom',
+                'global_frame': f'{robot_name}/map',
+                'robot_base_frame': f'{robot_name}/base_link',
+            }],
+            output='screen',
+        ))
+        
+        nodes.append(Node(
+            package='nav2_bt_navigator',
+            executable='bt_navigator',
+            name='bt_navigator',
+            namespace=robot_name,
+            parameters=[
+                nav2_params_file,
+                {
+                'use_sim_time': True,
+                'bt_xml_filename': '/opt/ros/jazzy/share/nav2_bt_navigator/behavior_trees/navigate_w_replanning_and_recovery.xml',
+                'global_frame': f'{robot_name}/map',
+                'robot_base_frame': f'{robot_name}/base_link',
+                'odom_topic': f'/{robot_name}/odom',
+            }],
+            output='screen',
+        ))
+
+        nodes.append(Node(
+            package='nav2_lifecycle_manager',
+            executable='lifecycle_manager',
+            name='lifecycle_manager_navigation',
+            namespace=robot_name,
+            parameters=[{
+                'use_sim_time': True,
+                'autostart': True,
+                'node_names': [
+                    'controller_server',
+                    'planner_server',
+                    'behavior_server',
+                    'bt_navigator',
+                ],
+            }],
             output='screen',
         ))
 
