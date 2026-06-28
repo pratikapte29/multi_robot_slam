@@ -48,6 +48,10 @@ def generate_launch_description():
             executable='async_slam_toolbox_node',
             name='slam_toolbox',
             namespace=robot_name,
+            remappings=[
+                ('/map', f'/{robot_name}/map'),
+                ('/map_metadata', f'/{robot_name}/map_metadata'),
+            ],
             parameters=[{
                 'use_sim_time': True,
                 'scan_topic': f'/{robot_name}/lidar_2d',
@@ -66,14 +70,20 @@ def generate_launch_description():
             output='screen',
         ))
 
-        nodes.append(Node(
-            package='topic_tools',
-            executable='relay',
-            name=f'map_relay_{robot_name}',
-            namespace=robot_name,
-            arguments=['/map', 'map'],
-            output='screen',
-        ))
+        """
+        below node was a mistake, basically all robots published on /map, 
+        that caused them to overwrite each other one after other, and once they publish on /map
+        it was relayed to each of their individual ones
+        """
+
+        # nodes.append(Node(
+        #     package='topic_tools',
+        #     executable='relay',
+        #     name=f'map_relay_{robot_name}',
+        #     namespace=robot_name,
+        #     arguments=['/map', 'map'],
+        #     output='screen',
+        # ))
 
         nodes.append(Node(
             package='nav2_controller',

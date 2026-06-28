@@ -7,6 +7,7 @@ from nav_msgs.msg import OccupancyGrid
 from geometry_msgs.msg import PoseStamped
 from action_msgs.msg import GoalStatus
 from nav2_msgs.action import NavigateToPose
+from visualization_msgs.msg import Marker
 
 import numpy as np
 import math
@@ -40,6 +41,9 @@ class FrontierExplorer(Node):
         # Add test mode parameter
         self.declare_parameter('test_mode', False)  # Set to True to skip Nav2
         self._test_mode = self.get_parameter('test_mode').value
+
+        # parameter to visualize the frontier goals
+        self._marker_pub = self.create_publisher(Marker, 'frontier_goal', 10)
         
         self.declare_parameter('min_frontier_size', 5)
         self.declare_parameter('revisit_radius',    0.3)
@@ -98,6 +102,32 @@ class FrontierExplorer(Node):
 
         self.create_timer(poll_period, self._explore)
 
+    # ------------------------------------------------------------------
+    # Publish goal marker on Rviz for verification
+    # ------------------------------------------------------------------
+    def _publish_goal_marker(self, x: float, y: float):
+        marker = Marker()
+        marker.header.frame_id = self._goal_frame
+        marker.header.stamp = self.get_clock().now().to_msg()
+        marker.ns = 'frontier_goal'
+        marker.id = 0
+        marker.type = Marker.SPHERE
+        marker.action = Marker.ADD
+        marker.pose.position.x = x
+        marker.pose.position.y = y
+        marker.pose.position.z = 0.0
+        marker.pose.orientation.w = 1.0
+        marker.scale.x = 0.3
+        marker.scale.y = 0.3
+        marker.scale.z = 0.3
+        marker.color.r = 1.0
+        marker.color.g = 0.0
+        marker.color.b = 0.0
+        marker.color.a = 1.0
+        marker.lifetime.sec = 0
+        marker.lifetime.nanosec = 0
+        self._marker_pub.publish(marker)
+
 
     # ------------------------------------------------------------------
     # Map callback
@@ -111,6 +141,12 @@ class FrontierExplorer(Node):
     def _explore(self):
         if self._map is None or self._navigating:
             return
+        
+        self.get_logger().info(  # 👈 add here
+            f'Map origin: {self._map.info.origin.position.x:.2f}, '
+            f'{self._map.info.origin.position.y:.2f}, '
+            f'resolution: {self._map.info.resolution}'
+        )
 
         frontiers = self._find_frontiers()
         if not frontiers:
@@ -138,6 +174,7 @@ class FrontierExplorer(Node):
         self.get_logger().info(
             f'Navigating to frontier ({goal[0]:.2f}, {goal[1]:.2f})')
         self._current_goal = goal
+        self._publish_goal_marker(*goal)
         self._send_goal(*goal)
 
     # ------------------------------------------------------------------
@@ -171,6 +208,9 @@ class FrontierExplorer(Node):
         oy  = msg.info.origin.position.y
 
         data = np.array(msg.data, dtype=np.int8).reshape((height, width))
+        self.get_logger().info(
+            f'Map corners: TL={data[0,0]} TR={data[0,-1]} BL={data[-1,0]} BR={data[-1,-1]}'
+        )
         
         # Use your utility function to find frontier cells
         frontier_cells = find_frontiers(data)
@@ -187,7 +227,14 @@ class FrontierExplorer(Node):
         centroids = []
         for cluster in clusters:
             cell_centroid = frontier_centroid(cluster)
+            cy, cx = int(cell_centroid[0]), int(cell_centroid[1])  # extract here
             world_pos = map_to_world(cell_centroid, (ox, oy), res)
+            self.get_logger().info(
+                f'cell ({cy},{cx}) val={data[cy, cx]} '
+                f'neighbours: up={data[cy-1, cx]} down={data[cy+1, cx]} '
+                f'left={data[cy, cx-1]} right={data[cy, cx+1]}'
+            )
+            self.get_logger().info(f'world_pos: {world_pos}')
             centroids.append(world_pos)
         
         return centroids
@@ -269,8 +316,9 @@ class FrontierExplorer(Node):
 
         if self._test_mode:
             self.get_logger().info(f'[TEST MODE] Goal message created: x={x:.2f}, y={y:.2f}, frame={self._goal_frame}')
-            # Simulate goal success
+            self._publish_goal_marker(x, y)
             self._visited.append((x, y))
+            time.sleep(3.0)  #  pause to visualize
             self._navigating = False
         else:
             self._goal_sent_time = time.monotonic()

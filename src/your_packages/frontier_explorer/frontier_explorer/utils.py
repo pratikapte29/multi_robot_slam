@@ -114,8 +114,9 @@ def find_frontiers(map: np.ndarray) -> np.ndarray:
     ], dtype=bool)
 
     unknown_dilated = binary_dilation(unknown_mask, structure=kernel)
-
-    frontier_mask = free_mask & unknown_dilated
+    occupied_mask = (map > 0)
+    occupied_dilated = binary_dilation(occupied_mask, structure=kernel)
+    frontier_mask = free_mask & unknown_dilated & ~occupied_dilated
 
     frontier_cells = np.argwhere(frontier_mask)
 
@@ -141,7 +142,13 @@ def cluster_frontiers(
 
 
 def frontier_centroid(cluster: np.ndarray) -> tuple:
-    return tuple(np.mean(cluster, axis=0).astype(int))
+    centroid = np.mean(cluster, axis=0)
+
+    distances = np.linalg.norm(cluster - centroid, axis=1)
+
+    best_cell = cluster[np.argmin(distances)]
+
+    return tuple(best_cell)
 
 
 def compute_utility(info_gain: float, motion_cost: float, lambda_: float = 0.4) -> float:
