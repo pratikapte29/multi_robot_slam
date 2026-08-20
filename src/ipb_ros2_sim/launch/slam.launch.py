@@ -7,8 +7,9 @@ from ament_index_python.packages import get_package_share_directory
 
 from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration
-from nav2_common.launch import HasNodeParams
+# from nav2_common.launch import HasNodeParams
 from launch.conditions import IfCondition
+from launch.actions import TimerAction
 
 from launch.actions import DeclareLaunchArgument
 
@@ -181,5 +182,21 @@ def generate_launch_description():
             output='screen',
             shell=True,
         ))
+
+    # get robot spawn poses
+    robot_spawn_poses = {
+        "TT_robot0": (1.0, 1.0, -0.9),
+        "TT_robot1": (-1.0, 2.0, 1.8),
+        "TT_robot2": (3.0, 4.0, 0.0),
+    }
+
+    for name, (x, y, theta) in robot_spawn_poses.items():
+        nodes.append(Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name=f'map_to_{name}_map',
+        arguments=[str(x), str(y), '0', str(theta), '0', '0', 'map', f'{name}/map'],
+        output='screen',
+    ))
 
     return LaunchDescription([all_launch] + nodes)

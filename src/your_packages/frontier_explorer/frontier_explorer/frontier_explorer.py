@@ -244,58 +244,41 @@ class FrontierExplorer(Node):
         pos = self._robot_position()
         if pos is None:
             return None
-
+        
         rx, ry = pos
+        best, best_score = None, float('-inf')
+        
+        # Get sensor range in cells (e.g., 2m at 0.05m/cell = 40 cells)
         sensor_range_cells = int(self._sensor_range / self._map.info.resolution)
-        data = np.array(self._map.data, dtype=np.int8).reshape(
-            (self._map.info.height, self._map.info.width))
-
-        # collect values for motion cost and info gain 
-        candidates = []  # list of (fx, fy, motion_cost, info_gain)
+        
         for fx, fy in frontiers:
             if self._already_visited(fx, fy):
                 continue
-
+            
             motion_cost = compute_motion_cost((rx, ry), (fx, fy))
             if motion_cost < self._min_goal_dist:
                 continue
-
-            frontier_cell = world_to_map((fx, fy),
-                                    (self._map.info.origin.position.x,
-                                    self._map.info.origin.position.y),
-                                    self._map.info.resolution)
-
+            
+            # Convert world coords back to map coords to compute info gain
+            frontier_cell = world_to_map((fx, fy), 
+                                     (self._map.info.origin.position.x, 
+                                      self._map.info.origin.position.y),
+                                     self._map.info.resolution)
+            
+            # Compute info gain using your entropy-based function
+            data = np.array(self._map.data, dtype=np.int8).reshape(
+                (self._map.info.height, self._map.info.width))
             info_gains = compute_information_gain(
-                data,
-                np.array([frontier_cell]),
+                data, 
+                np.array([frontier_cell]), 
                 sensor_range_cells
             )
             info_gain = info_gains[tuple(frontier_cell)]
-
-            candidates.append((fx, fy, motion_cost, info_gain))
-
-        if not candidates:
-            return None
-
-        # in second pass, normalize all MC and IG values from 0 to 1 to have an equal comparison when combining
-        motion_costs = [c[2] for c in candidates]
-        info_gains_all = [c[3] for c in candidates]
-
-        mc_min, mc_max = min(motion_costs), max(motion_costs)
-        ig_min, ig_max = min(info_gains_all), max(info_gains_all)
-
-        mc_range = mc_max - mc_min
-        ig_range = ig_max - ig_min
-
-        best, best_score = None, float('-inf')
-        for fx, fy, motion_cost, info_gain in candidates:
-            norm_mc = (motion_cost - mc_min) / mc_range if mc_range > 0 else 0.0
-            norm_ig = (info_gain - ig_min) / ig_range if ig_range > 0 else 0.0
-
-            utility = compute_utility(norm_ig, norm_mc, lambda_=0.4)
+            
+            utility = compute_utility(info_gain, motion_cost, lambda_=0.4)
             if utility > best_score:
                 best_score, best = utility, (fx, fy)
-
+        
         return best
     
     def _already_visited(self, fx, fy):
