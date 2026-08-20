@@ -165,23 +165,22 @@ def generate_launch_description():
             output='screen',
         ))
 
-    lifecycle_nodes = [
-        '/TT_robot0/slam_toolbox',
-        '/TT_robot1/slam_toolbox', 
-        '/TT_robot2/slam_toolbox',
-    ]
-
-    for node_name in lifecycle_nodes:
-        nodes.append(ExecuteProcess(
-            cmd=['ros2', 'lifecycle', 'set', node_name, 'configure'],
-            output='screen',
-            shell=True,
-        ))
-        nodes.append(ExecuteProcess(
-            cmd=['ros2', 'lifecycle', 'set', node_name, 'activate'],
-            output='screen',
-            shell=True,
-        ))
+    nodes.append(Node(
+    package='nav2_lifecycle_manager',
+    executable='lifecycle_manager',
+    name='lifecycle_manager_slam',
+    parameters=[{
+        'use_sim_time': True,
+        'autostart': True,
+        'bond_timeout': 0.0,
+        'node_names': [
+            '/TT_robot0/slam_toolbox',
+            '/TT_robot1/slam_toolbox',
+            '/TT_robot2/slam_toolbox',
+        ],
+    }],
+    output='screen',
+))
 
     # get robot spawn poses
     robot_spawn_poses = {
